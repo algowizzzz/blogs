@@ -35,13 +35,25 @@ export async function getAllPosts(): Promise<Post[]> {
  */
 export async function getPostBySlug(slug: string): Promise<Post> {
   try {
-    return await api.posts.read(
+    const post = await api.posts.read(
       { slug },
       { include: ["tags", "authors"] }
     );
-  } catch (error) {
+    if (!post) {
+      throw new Error(`Post not found: ${slug}`);
+    }
+    return post;
+  } catch (error: any) {
     console.error(`Error fetching post with slug "${slug}":`, error);
-    throw new Error(`Failed to fetch post: ${slug}`);
+    // Log more details if available
+    if (error?.response) {
+      console.error('API Response status:', error.response.status);
+      console.error('API Response data:', error.response.data);
+    }
+    if (error?.message) {
+      console.error('Error message:', error.message);
+    }
+    throw error; // Re-throw to let the page handle it
   }
 }
 

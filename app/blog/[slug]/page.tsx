@@ -10,9 +10,10 @@ type Params = { slug: string };
 export const dynamic = 'force-dynamic'; // Use dynamic rendering
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<Params> | Params }): Promise<Metadata> {
   try {
-    const post = await getPostBySlug(params.slug);
+    const resolvedParams = await Promise.resolve(params);
+    const post = await getPostBySlug(resolvedParams.slug);
     
     return {
       title: post.title,
@@ -41,18 +42,31 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 export default async function BlogPostPage({
   params,
 }: {
-  params: Params;
+  params: Promise<Params> | Params;
 }) {
+  // Handle both Promise and direct params (Next.js 15+ compatibility)
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
+  
+  console.log(`[BlogPostPage] Attempting to fetch post with slug: "${slug}"`);
+  
   let post;
   try {
-    post = await getPostBySlug(params.slug);
+    post = await getPostBySlug(slug);
+    console.log(`[BlogPostPage] Successfully fetched post: "${post.title}"`);
   } catch (e) {
+    console.error(`[BlogPostPage] Error fetching post with slug "${slug}":`, e);
+    // Log the error details for debugging
+    if (e instanceof Error) {
+      console.error('Error message:', e.message);
+      console.error('Error stack:', e.stack);
+    }
     return notFound();
   }
 
   const courses = post.tags ? getCoursesFromTags(post.tags) : [];
   const firstCourse = courses[0];
-  const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${post.slug}`;
+  const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${slug}`;
 
   // JSON-LD Schema for Article
   const jsonLd = {
