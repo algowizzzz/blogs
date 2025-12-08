@@ -35,9 +35,14 @@ export async function getAllPosts(): Promise<Post[]> {
  */
 export async function getPostBySlug(slug: string): Promise<Post> {
   try {
+    // Request codeinjection_foot explicitly via fields parameter
     const post = await api.posts.read(
       { slug },
-      { include: ["tags", "authors"] }
+      { 
+        include: ["tags", "authors"],
+        // Try to include codeinjection_foot via fields
+        fields: "id,title,slug,html,excerpt,feature_image,published_at,updated_at,meta_description,codeinjection_foot"
+      } as any
     );
     if (!post) {
       throw new Error(`Post not found: ${slug}`);
@@ -46,7 +51,9 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     // Log available fields for debugging
     console.log(`[getPostBySlug] Post fields:`, Object.keys(post));
     if ((post as any).codeinjection_foot) {
-      console.log(`[getPostBySlug] Found codeinjection_foot`);
+      console.log(`[getPostBySlug] Found codeinjection_foot, length: ${(post as any).codeinjection_foot?.length || 0}`);
+    } else {
+      console.log(`[getPostBySlug] codeinjection_foot not found in response`);
     }
     
     return post;

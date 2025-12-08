@@ -14,16 +14,21 @@ export async function generateMetadata({ params }: { params: Promise<Params> | P
   try {
     const resolvedParams = await Promise.resolve(params);
     const post = await getPostBySlug(resolvedParams.slug);
+    const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${post.slug}`;
     
     return {
       title: post.title,
       description: post.excerpt || post.meta_description || "Read more on DeepLearnHQ",
+      alternates: {
+        canonical: canonicalUrl,
+      },
       openGraph: {
         title: post.title,
         description: post.excerpt || post.meta_description || undefined,
         images: post.feature_image ? [post.feature_image] : undefined,
         type: "article",
         publishedTime: post.published_at || undefined,
+        url: canonicalUrl,
       },
       twitter: {
         card: "summary_large_image",

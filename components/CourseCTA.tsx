@@ -27,14 +27,24 @@ export default function CourseCTA({ course, variant = "inline" }: CourseCTAProps
           )}
           <h3 className="text-xl font-bold mb-2">{course.title}</h3>
           <p className="text-gray-700 dark:text-gray-300 mb-4">{course.subtitle}</p>
-          <Link
-            href={course.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-          >
-            View Course →
-          </Link>
+              <Link
+                href={course.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                onClick={() => {
+                  // Track CTA click in Google Analytics
+                  if (typeof window !== 'undefined' && (window as any).gtag) {
+                    (window as any).gtag('event', 'course_cta_click', {
+                      course_id: course.id,
+                      course_title: course.title,
+                      variant: variant,
+                    });
+                  }
+                }}
+              >
+                View Course →
+              </Link>
         </div>
       </div>
     </div>
