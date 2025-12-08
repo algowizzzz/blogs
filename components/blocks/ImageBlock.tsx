@@ -1,4 +1,5 @@
 // components/blocks/ImageBlock.tsx
+import Image from "next/image";
 import type { ImageBlock as ImageBlockType } from "@/types/content-blocks";
 
 interface Props {
@@ -21,18 +22,26 @@ export default function ImageBlock({ block }: Props) {
     large: "my-8",
   };
 
+  // Default dimensions if not provided
+  const width = block.width || 800;
+  const height = block.height || 600;
+
   return (
     <figure className={`${spacingClasses[spacing]} ${alignmentClasses[alignment]}`}>
-      <img
-        src={block.url}
-        alt={block.alt}
-        className="w-full rounded-lg"
-        style={{
-          maxWidth: block.width ? `${block.width}px` : undefined,
-          height: block.height ? `${block.height}px` : undefined,
-          objectFit: block.height ? "cover" : undefined,
-        }}
-      />
+      <div className="relative w-full" style={{ maxWidth: block.width ? `${block.width}px` : undefined }}>
+        <Image
+          src={block.url}
+          alt={block.alt}
+          width={width}
+          height={height}
+          className="w-full rounded-lg"
+          style={{
+            height: block.height ? `${block.height}px` : "auto",
+            objectFit: block.height ? "cover" : "contain",
+          }}
+          loading="lazy"
+        />
+      </div>
       {block.caption && (
         <figcaption className="mt-2 text-sm text-gray-600 text-center italic">
           {block.caption}

@@ -1,8 +1,13 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getPostBySlug, getAllPosts } from "@/lib/ghost";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedPosts from "@/components/RelatedPosts";
+import SocialShare from "@/components/SocialShare";
+import { getRelatedPosts } from "@/lib/relatedPosts";
 import type { ContentBlock } from "@/types/content-blocks";
 
 type Params = { slug: string };
@@ -71,6 +76,10 @@ export default async function BlogPostPage({
 
   const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${slug}`;
 
+  // Get related posts
+  const allPosts = await getAllPosts();
+  const relatedPosts = getRelatedPosts(post, allPosts, 5);
+
   // Parse content_blocks from codeinjection_foot (we'll store JSON there)
   let contentBlocks: ContentBlock[] = [];
   try {
@@ -121,23 +130,35 @@ export default async function BlogPostPage({
     },
   };
 
+  // Breadcrumb items
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Blog", href: "/" },
+    { label: post.title },
+  ];
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Breadcrumbs items={breadcrumbItems} />
       <article>
         <h1 className="text-4xl font-bold mb-4">
           {post.title}
         </h1>
 
         {post.feature_image && (
-          <img
-            src={post.feature_image}
-            alt={post.title || ""}
-            className="w-full rounded-lg mb-6"
-          />
+          <div className="relative w-full h-64 md:h-96 mb-6 rounded-lg overflow-hidden">
+            <Image
+              src={post.feature_image}
+              alt={post.title || ""}
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
         )}
 
         <div className="text-sm text-gray-500 mb-8">
@@ -158,6 +179,16 @@ export default async function BlogPostPage({
             <p className="text-gray-600">Content is being loaded...</p>
           </div>
         )}
+
+        {/* Social Sharing */}
+        <SocialShare
+          url={postUrl}
+          title={post.title}
+          description={post.excerpt || post.meta_description}
+        />
+
+        {/* Related Posts */}
+        {relatedPosts.length > 0 && <RelatedPosts posts={relatedPosts} />}
       </article>
     </div>
   );

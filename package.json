@@ -12,6 +12,7 @@
     "delete:ghost": "tsx scripts/deleteAllPosts.ts"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.29.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tryghost/admin-api": "^1.14.2",
     "@tryghost/content-api": "^1.12.2",
