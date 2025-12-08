@@ -64,9 +64,17 @@ export async function getPostsByCategorySlug(categorySlug: string): Promise<Post
   try {
     const allPosts = await getAllPosts();
     const categoryTag = `category:${categorySlug}`;
-    return allPosts.filter((post) =>
-      post.tags?.some((tag) => tag.slug === categoryTag || tag.name === categoryTag)
-    );
+    
+    const filtered = allPosts.filter((post) => {
+      const hasCategory = post.tags?.some((tag) => {
+        const tagSlug = tag.slug || tag.name || "";
+        return tagSlug === categoryTag || tagSlug.endsWith(`:${categorySlug}`);
+      });
+      return hasCategory;
+    });
+    
+    console.log(`[getPostsByCategorySlug] Looking for "${categoryTag}", found ${filtered.length} posts`);
+    return filtered;
   } catch (error) {
     console.error(`Error fetching posts for category "${categorySlug}":`, error);
     return [];

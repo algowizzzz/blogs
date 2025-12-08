@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Introduction to Prompt Engineering",
+    "slug": "introduction-to-prompt-engineering",
+    "html": "<p>This is a comprehensive guide to prompt engineering...</p>",
+    "excerpt": "Learn the fundamentals of crafting effective prompts for AI models.",
+    "tags": ["category:prompt-engineering", "course:prompt-bootcamp", "beginner"],
+    "status": "published"
+  },
+  {
+    "title": "Advanced ChatGPT Techniques",
+    "slug": "advanced-chatgpt-techniques",
+    "html": "<p>Master advanced techniques for getting the most out of ChatGPT...</p>",
+    "excerpt": "Discover powerful strategies for complex AI interactions.",
+    "tags": ["category:prompt-engineering", "course:chatgpt-mastery", "advanced"],
+    "status": "published"
+  },
+  {
+    "title": "AI for Financial Analysis",
+    "slug": "ai-for-financial-analysis",
+    "html": "<p>How to use AI tools for financial decision-making...</p>",
+    "excerpt": "Transform your financial workflows with AI.",
+    "tags": ["category:finance-ai", "course:ai-for-finance"],
+    "status": "published"
+  }
+]
+

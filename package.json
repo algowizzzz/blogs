@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "publish:ghost": "tsx scripts/publishToGhost.ts"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
+    "@tryghost/admin-api": "^1.14.2",
     "@tryghost/content-api": "^1.12.2",
+    "dotenv": "^17.2.3",
     "next": "16.0.7",
     "react": "19.2.0",
     "react-dom": "19.2.0"
@@ -24,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

@@ -27,9 +27,12 @@ function formatCategoryName(slug: string): string {
 export default async function CategoryPage({
   params,
 }: {
-  params: Params;
+  params: Promise<Params> | Params;
 }) {
-  const posts = await getPostsByCategorySlug(params.slug);
+  const resolvedParams = await Promise.resolve(params);
+  const posts = await getPostsByCategorySlug(resolvedParams.slug);
+
+  console.log(`[CategoryPage] Slug: ${resolvedParams.slug}, Found ${posts.length} posts`);
 
   if (posts.length === 0) {
     return notFound();
