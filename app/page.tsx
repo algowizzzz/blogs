@@ -1,17 +1,17 @@
 // app/page.tsx
 import Link from "next/link";
 import { getAllPosts } from "@/lib/ghost";
+import type { Post } from "@tryghost/content-api";
 
 export const dynamic = 'force-dynamic'; // Use dynamic rendering
 export const revalidate = 60; // ISR: revalidate every 60s
 
 export default async function HomePage() {
-  let posts;
+  let posts: Post[] = [];
   try {
     posts = await getAllPosts();
   } catch (error) {
     console.error('Error fetching posts:', error);
-    posts = [];
   }
 
   return (
