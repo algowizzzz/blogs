@@ -1,16 +1,11 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/ghost";
+import { getPostBySlug } from "@/lib/ghost";
 
 type Params = { slug: string };
 
+export const dynamic = 'force-dynamic'; // Use dynamic rendering
 export const revalidate = 60;
-
-// Pre-generate static params for all posts
-export async function generateStaticParams() {
-  const posts = await getAllPosts();
-  return posts.map((post) => ({ slug: post.slug }));
-}
 
 export default async function BlogPostPage({
   params,

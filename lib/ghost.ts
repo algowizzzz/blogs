@@ -8,7 +8,7 @@ if (!process.env.GHOST_API_URL || !process.env.GHOST_CONTENT_KEY) {
 const api = new GhostContentAPI({
   url: process.env.GHOST_API_URL,
   key: process.env.GHOST_CONTENT_KEY,
-  version: "v5", // or "v4" depending on your Ghost version
+  version: "v5.0",
 });
 
 export async function getAllPosts() {

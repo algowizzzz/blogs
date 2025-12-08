@@ -2,10 +2,17 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/ghost";
 
+export const dynamic = 'force-dynamic'; // Use dynamic rendering
 export const revalidate = 60; // ISR: revalidate every 60s
 
 export default async function HomePage() {
-  const posts = await getAllPosts();
+  let posts;
+  try {
+    posts = await getAllPosts();
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    posts = [];
+  }
 
   return (
     <main className="max-w-3xl mx-auto py-10">
