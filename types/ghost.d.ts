@@ -7,6 +7,8 @@ declare module '@tryghost/content-api' {
     excerpt?: string;
     feature_image?: string;
     published_at?: string;
+    updated_at?: string;
+    meta_description?: string;
     tags?: Tag[];
     authors?: Author[];
   }
