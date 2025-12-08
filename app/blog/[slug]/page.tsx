@@ -2,8 +2,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPostBySlug, getAllPosts } from "@/lib/ghost";
-import { getCoursesFromTags } from "@/lib/courseMap";
-import CourseCTA from "@/components/CourseCTA";
+import BlockRenderer from "@/components/blocks/BlockRenderer";
+import type { ContentBlock } from "@/types/content-blocks";
 
 type Params = { slug: string };
 
@@ -64,9 +64,27 @@ export default async function BlogPostPage({
     return notFound();
   }
 
-  const courses = post.tags ? getCoursesFromTags(post.tags) : [];
-  const firstCourse = courses[0];
   const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${slug}`;
+
+  // Parse content_blocks from codeinjection_foot (we'll store JSON there)
+  let contentBlocks: ContentBlock[] = [];
+  try {
+    if (post.codeinjection_foot) {
+      // codeinjection_foot contains the JSON string directly
+      const parsed = JSON.parse(post.codeinjection_foot);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        contentBlocks = parsed;
+        console.log(`[BlogPostPage] Loaded ${contentBlocks.length} content blocks`);
+      }
+    } else {
+      console.log(`[BlogPostPage] No codeinjection_foot found for post "${post.title}"`);
+    }
+  } catch (e) {
+    console.error("Error parsing content_blocks:", e);
+    if (post.codeinjection_foot) {
+      console.error("codeinjection_foot content:", post.codeinjection_foot.substring(0, 100));
+    }
+  }
 
   // JSON-LD Schema for Article
   const jsonLd = {
@@ -120,23 +138,12 @@ export default async function BlogPostPage({
             : null}
         </div>
 
-        {/* Inline Course CTA (after intro, before content) */}
-        {firstCourse && (
-          <CourseCTA course={firstCourse} variant="inline" />
-        )}
-
-        {/* Ghost returns HTML in post.html */}
-        <div
-          className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-lg"
-          dangerouslySetInnerHTML={{ __html: post.html || "" }}
-        />
-
-        {/* Bottom Course CTAs (all courses) */}
-        {courses.length > 0 && (
-          <div className="mt-12">
-            {courses.map((course) => (
-              <CourseCTA key={course.id} course={course} variant="bottom" />
-            ))}
+        {/* Render content blocks */}
+        {contentBlocks.length > 0 ? (
+          <BlockRenderer blocks={contentBlocks} />
+        ) : (
+          <div className="prose prose-lg dark:prose-invert max-w-none">
+            <p className="text-gray-600">Content is being loaded...</p>
           </div>
         )}
       </article>

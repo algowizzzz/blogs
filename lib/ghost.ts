@@ -42,6 +42,13 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     if (!post) {
       throw new Error(`Post not found: ${slug}`);
     }
+    
+    // Log available fields for debugging
+    console.log(`[getPostBySlug] Post fields:`, Object.keys(post));
+    if ((post as any).codeinjection_foot) {
+      console.log(`[getPostBySlug] Found codeinjection_foot`);
+    }
+    
     return post;
   } catch (error: any) {
     console.error(`Error fetching post with slug "${slug}":`, error);

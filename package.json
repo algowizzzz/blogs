@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "publish:ghost": "tsx scripts/publishToGhost.ts"
+    "publish:ghost": "tsx scripts/publishToGhost.ts",
+    "delete:ghost": "tsx scripts/deleteAllPosts.ts"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",

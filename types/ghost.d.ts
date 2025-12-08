@@ -11,6 +11,9 @@ declare module '@tryghost/content-api' {
     meta_description?: string;
     tags?: Tag[];
     authors?: Author[];
+    custom_excerpt?: string;
+    codeinjection_head?: string;
+    codeinjection_foot?: string;
   }
 
   export interface Tag {

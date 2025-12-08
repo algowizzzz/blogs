@@ -1,0 +1,471 @@
+[
+  {
+    "title": "Complete Guide to Prompt Engineering",
+    "slug": "complete-guide-prompt-engineering",
+    "excerpt": "A comprehensive guide covering all aspects of prompt engineering, from basics to advanced techniques.",
+    "tags": ["category:prompt-engineering", "course:prompt-bootcamp", "beginner", "advanced"],
+    "status": "published",
+    "feature_image": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+    "content_blocks": [
+      {
+        "id": "h1_1",
+        "type": "heading",
+        "level": 1,
+        "content": "Complete Guide to Prompt Engineering",
+        "formatting": {
+          "alignment": "left",
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "para_1",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Prompt engineering is the art and science of crafting effective instructions for AI models. This comprehensive guide will take you from beginner to advanced practitioner."
+          }
+        ],
+        "formatting": {
+          "alignment": "left",
+          "spacing": "medium"
+        }
+      },
+      {
+        "id": "img_1",
+        "type": "image",
+        "url": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+        "alt": "Prompt engineering visualization",
+        "caption": "Understanding how prompts work with AI models",
+        "formatting": {
+          "alignment": "center",
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "cta_1",
+        "type": "cta",
+        "course_id": "course:prompt-bootcamp",
+        "variant": "inline",
+        "formatting": {
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "h2_1",
+        "type": "heading",
+        "level": 2,
+        "content": "Fundamental Principles",
+        "formatting": {
+          "alignment": "left",
+          "spacing": "medium"
+        }
+      },
+      {
+        "id": "para_2",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The foundation of effective prompt engineering rests on several key principles:"
+          }
+        ],
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "table_1",
+        "type": "table",
+        "columns": ["Principle", "Description", "Impact"],
+        "rows": [
+          ["Be Specific", "Clear, detailed prompts yield better results", "High"],
+          ["Provide Context", "Give AI enough background information", "High"],
+          ["Use Examples", "Show AI what you want through examples", "Medium"],
+          ["Iterate", "Refine prompts based on outputs", "Medium"]
+        ],
+        "has_header": true,
+        "column_alignments": ["left", "left", "center"],
+        "formatting": {
+          "alignment": "center",
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "spacer_1",
+        "type": "spacer",
+        "height": 40,
+        "formatting": {
+          "spacing": "medium"
+        }
+      },
+      {
+        "id": "h2_2",
+        "type": "heading",
+        "level": 2,
+        "content": "Advanced Techniques",
+        "formatting": {
+          "alignment": "left",
+          "spacing": "medium"
+        }
+      },
+      {
+        "id": "para_3",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Once you've mastered the basics, explore these advanced techniques:"
+          }
+        ]
+      },
+      {
+        "id": "h3_1",
+        "type": "heading",
+        "level": 3,
+        "content": "Chain of Thought Prompting",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_4",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Break complex tasks into steps. Instead of asking for a final answer, guide the AI through reasoning: "
+          },
+          {
+            "text": "\"Let's solve this step by step. First, identify the key variables...\"",
+            "italic": true
+          }
+        ]
+      },
+      {
+        "id": "h3_2",
+        "type": "heading",
+        "level": 3,
+        "content": "Role-Based Prompting",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_5",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Assign roles to get specialized outputs: "
+          },
+          {
+            "text": "\"You are an expert financial analyst. Analyze this data and provide recommendations...\"",
+            "italic": true
+          }
+        ]
+      },
+      {
+        "id": "multi_col_1",
+        "type": "multi-column",
+        "columnCount": 2,
+        "children": [
+          {
+            "id": "col_1_img",
+            "type": "image",
+            "url": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+            "alt": "Example chart",
+            "caption": "Visual example"
+          },
+          {
+            "id": "col_2_para",
+            "type": "paragraph",
+            "content": [
+              {
+                "text": "Multi-column layouts allow you to combine images and text side by side. This is perfect for comparing concepts or showing examples alongside explanations."
+              }
+            ]
+          }
+        ],
+        "formatting": {
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "cta_2",
+        "type": "cta",
+        "course_id": "course:chatgpt-mastery",
+        "variant": "inline",
+        "formatting": {
+          "spacing": "large"
+        }
+      },
+      {
+        "id": "h2_3",
+        "type": "heading",
+        "level": 2,
+        "content": "Best Practices",
+        "formatting": {
+          "alignment": "left",
+          "spacing": "medium"
+        }
+      },
+      {
+        "id": "para_6",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Follow these best practices to get the most out of your prompts:"
+          }
+        ]
+      },
+      {
+        "id": "para_7",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• ",
+            "bold": true
+          },
+          {
+            "text": "Start simple and iterate"
+          }
+        ]
+      },
+      {
+        "id": "para_8",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• ",
+            "bold": true
+          },
+          {
+            "text": "Test with different phrasings"
+          }
+        ]
+      },
+      {
+        "id": "para_9",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• ",
+            "bold": true
+          },
+          {
+            "text": "Save successful prompts as templates"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "AI for Financial Professionals",
+    "slug": "ai-for-financial-professionals",
+    "excerpt": "Learn how financial professionals can leverage AI tools for analysis, reporting, and decision-making.",
+    "tags": ["category:finance-ai", "course:ai-for-finance", "intermediate"],
+    "status": "published",
+    "feature_image": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+    "content_blocks": [
+      {
+        "id": "h1_1",
+        "type": "heading",
+        "level": 1,
+        "content": "AI for Financial Professionals",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_1",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The financial industry is rapidly adopting AI tools to enhance analysis, improve decision-making, and automate routine tasks."
+          }
+        ]
+      },
+      {
+        "id": "cta_1",
+        "type": "cta",
+        "course_id": "course:ai-for-finance",
+        "variant": "inline"
+      },
+      {
+        "id": "h2_1",
+        "type": "heading",
+        "level": 2,
+        "content": "Data Analysis and Insights",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_2",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "AI can process vast amounts of financial data to identify patterns, trends, and anomalies that might be missed by traditional methods."
+          }
+        ]
+      },
+      {
+        "id": "table_1",
+        "type": "table",
+        "columns": ["Metric", "Traditional", "AI-Enhanced"],
+        "rows": [
+          ["Processing Speed", "Hours", "Minutes"],
+          ["Accuracy", "85%", "95%"],
+          ["Cost per Analysis", "$500", "$50"]
+        ],
+        "has_header": true,
+        "column_alignments": ["left", "center", "center"],
+        "formatting": {
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "img_1",
+        "type": "image",
+        "url": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+        "alt": "Financial data visualization",
+        "caption": "AI-powered financial analysis dashboard",
+        "formatting": {
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "h2_2",
+        "type": "heading",
+        "level": 2,
+        "content": "Risk Assessment",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_3",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Machine learning models excel at risk analysis, helping financial professionals assess credit risk, market volatility, and investment opportunities with greater accuracy."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Getting Started with ChatGPT",
+    "slug": "getting-started-chatgpt",
+    "excerpt": "A beginner-friendly introduction to using ChatGPT effectively for your work.",
+    "tags": ["category:prompt-engineering", "beginner", "tutorial"],
+    "status": "published",
+    "content_blocks": [
+      {
+        "id": "h1_1",
+        "type": "heading",
+        "level": 1,
+        "content": "Getting Started with ChatGPT",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_1",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "New to AI? This beginner-friendly guide will help you understand the basics and start using ChatGPT effectively in your daily work."
+          }
+        ]
+      },
+      {
+        "id": "h2_1",
+        "type": "heading",
+        "level": 2,
+        "content": "Understanding AI Assistants",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_2",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "AI assistants like ChatGPT are powerful tools that can help with writing, analysis, coding, and problem-solving. They work by understanding natural language and generating responses based on patterns learned from vast amounts of data."
+          }
+        ]
+      },
+      {
+        "id": "img_1",
+        "type": "image",
+        "url": "https://static.ghost.org/v4.0.0/images/feature-image.jpg",
+        "alt": "ChatGPT interface",
+        "formatting": {
+          "alignment": "center"
+        }
+      },
+      {
+        "id": "h2_2",
+        "type": "heading",
+        "level": 2,
+        "content": "Your First AI Interaction",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_3",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Start simple. Ask clear questions, provide context, and don't be afraid to refine your requests. Remember, AI is a tool that works best when you know how to use it effectively."
+          }
+        ]
+      },
+      {
+        "id": "h3_1",
+        "type": "heading",
+        "level": 3,
+        "content": "Common Use Cases",
+        "formatting": {
+          "alignment": "left"
+        }
+      },
+      {
+        "id": "para_4",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• Writing and editing content"
+          }
+        ]
+      },
+      {
+        "id": "para_5",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• Answering questions and research"
+          }
+        ]
+      },
+      {
+        "id": "para_6",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• Code generation and debugging"
+          }
+        ]
+      },
+      {
+        "id": "para_7",
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "• Data analysis and summarization"
+          }
+        ]
+      }
+    ]
+  }
+]
+
