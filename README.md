@@ -1,6 +1,22 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Setup
+
+### 1. Configure Ghost API
+
+Create a `.env.local` file in the project root with your Ghost API credentials:
+
+```env
+GHOST_API_URL=https://YOUR-GHOST-SITE.ghost.io
+GHOST_CONTENT_KEY=YOUR_CONTENT_API_KEY
+```
+
+To get these values:
+1. Go to your Ghost admin: **Settings → Integrations → Add custom integration**
+2. Name it "Next.js Frontend"
+3. Copy the **Content API Key** and **API URL**
+
+### 2. Getting Started
 
 First, run the development server:
 
