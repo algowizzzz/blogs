@@ -52,7 +52,7 @@ export default async function BlogPostPage({
 
   const courses = post.tags ? getCoursesFromTags(post.tags) : [];
   const firstCourse = courses[0];
-  const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://your-site.com'}/blog/${post.slug}`;
+  const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://blogs-puce-nine.vercel.app'}/blog/${post.slug}`;
 
   // JSON-LD Schema for Article
   const jsonLd = {

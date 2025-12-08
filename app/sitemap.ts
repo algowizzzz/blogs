@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 import { getAllPosts, getAllCategories } from "@/lib/ghost";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://your-site.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blogs-puce-nine.vercel.app";
   
   try {
     const posts = await getAllPosts();

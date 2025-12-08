@@ -13,21 +13,21 @@ export const COURSE_MAP: Record<string, Course> = {
     id: "course:prompt-bootcamp",
     title: "Complete Prompt Engineering, ChatGPT & AI Bootcamp",
     subtitle: "Learn practical prompting for real business workflows.",
-    url: "https://your-course-url.com/prompt-bootcamp",
+    url: "https://seekhoai.pk/checkout",
     badge: "Best Seller",
   },
   "course:ai-for-finance": {
     id: "course:ai-for-finance",
     title: "AI for Finance Professionals",
     subtitle: "Master AI tools for financial analysis and decision-making.",
-    url: "https://your-course-url.com/ai-finance",
+    url: "https://seekhoai.pk/checkout",
     badge: "New",
   },
   "course:chatgpt-mastery": {
     id: "course:chatgpt-mastery",
     title: "ChatGPT Mastery Course",
     subtitle: "Advanced techniques for getting the most out of ChatGPT.",
-    url: "https://your-course-url.com/chatgpt-mastery",
+    url: "https://seekhoai.pk/checkout",
   },
 } as const;
 
