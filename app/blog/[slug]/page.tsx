@@ -69,20 +69,27 @@ export default async function BlogPostPage({
   // Parse content_blocks from codeinjection_foot (we'll store JSON there)
   let contentBlocks: ContentBlock[] = [];
   try {
-    if (post.codeinjection_foot) {
-      // codeinjection_foot contains the JSON string directly
-      const parsed = JSON.parse(post.codeinjection_foot);
+    // Check both codeinjection_foot and any custom fields
+    const codeinjection = (post as any).codeinjection_foot;
+    
+    if (codeinjection && typeof codeinjection === 'string' && codeinjection.trim().startsWith('[')) {
+      // It's a JSON array string
+      const parsed = JSON.parse(codeinjection);
       if (Array.isArray(parsed) && parsed.length > 0) {
         contentBlocks = parsed;
         console.log(`[BlogPostPage] Loaded ${contentBlocks.length} content blocks`);
       }
+    } else if (codeinjection) {
+      console.log(`[BlogPostPage] codeinjection_foot exists but doesn't look like JSON array:`, codeinjection.substring(0, 50));
     } else {
       console.log(`[BlogPostPage] No codeinjection_foot found for post "${post.title}"`);
+      console.log(`[BlogPostPage] Available fields:`, Object.keys(post));
     }
   } catch (e) {
     console.error("Error parsing content_blocks:", e);
-    if (post.codeinjection_foot) {
-      console.error("codeinjection_foot content:", post.codeinjection_foot.substring(0, 100));
+    if ((post as any).codeinjection_foot) {
+      const foot = (post as any).codeinjection_foot;
+      console.error("codeinjection_foot content (first 200 chars):", typeof foot === 'string' ? foot.substring(0, 200) : foot);
     }
   }
 
