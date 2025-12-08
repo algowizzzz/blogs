@@ -38,7 +38,7 @@ export default async function CategoryPage({
     return notFound();
   }
 
-  const categoryName = formatCategoryName(params.slug);
+  const categoryName = formatCategoryName(resolvedParams.slug);
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">

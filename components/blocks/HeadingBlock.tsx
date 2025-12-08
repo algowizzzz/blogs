@@ -30,14 +30,23 @@ export default function HeadingBlock({ block }: Props) {
     right: "text-right",
   };
 
-  const Tag = `h${block.level}` as keyof JSX.IntrinsicElements;
+  const HeadingTag = {
+    1: "h1",
+    2: "h2",
+    3: "h3",
+    4: "h4",
+    5: "h5",
+    6: "h6",
+  }[block.level] as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+  const Component = HeadingTag;
 
   return (
-    <Tag
+    <Component
       className={`${sizeClasses[block.level]} ${alignmentClasses[alignment]} ${spacingClasses[spacing]}`}
     >
       {block.content}
-    </Tag>
+    </Component>
   );
 }
 
