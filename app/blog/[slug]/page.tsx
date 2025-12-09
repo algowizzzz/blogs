@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPostBySlug, getAllPosts } from "@/lib/ghost";
 import BlockRenderer from "@/components/blocks/BlockRenderer";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import DocsLayout from "@/components/DocsLayout";
 import RelatedPosts from "@/components/RelatedPosts";
 import SocialShare from "@/components/SocialShare";
 import { getRelatedPosts } from "@/lib/relatedPosts";
@@ -27,11 +27,8 @@ export async function generateMetadata({
 
     return {
       title: `${post.title} - DeepLearnHQ`,
-      description:
-        post.excerpt || post.meta_description || "Read more on DeepLearnHQ",
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      description: post.excerpt || post.meta_description || "Read more on DeepLearnHQ",
+      alternates: { canonical: canonicalUrl },
       openGraph: {
         title: post.title,
         description: post.excerpt || post.meta_description || undefined,
@@ -40,17 +37,9 @@ export async function generateMetadata({
         publishedTime: post.published_at || undefined,
         url: canonicalUrl,
       },
-      twitter: {
-        card: "summary_large_image",
-        title: post.title,
-        description: post.excerpt || post.meta_description || undefined,
-        images: post.feature_image ? [post.feature_image] : undefined,
-      },
     };
   } catch {
-    return {
-      title: "Post Not Found - DeepLearnHQ",
-    };
+    return { title: "Post Not Found - DeepLearnHQ" };
   }
 }
 
@@ -76,15 +65,11 @@ export default async function BlogPostPage({
   const allPosts = await getAllPosts();
   const relatedPosts = getRelatedPosts(post, allPosts, 3);
 
-  // Parse content_blocks from codeinjection_foot
+  // Parse content_blocks
   let contentBlocks: ContentBlock[] = [];
   try {
     const codeinjection = (post as any).codeinjection_foot;
-    if (
-      codeinjection &&
-      typeof codeinjection === "string" &&
-      codeinjection.trim().startsWith("[")
-    ) {
+    if (codeinjection && typeof codeinjection === "string" && codeinjection.trim().startsWith("[")) {
       const parsed = JSON.parse(codeinjection);
       if (Array.isArray(parsed) && parsed.length > 0) {
         contentBlocks = parsed;
@@ -103,164 +88,110 @@ export default async function BlogPostPage({
     image: post.feature_image,
     datePublished: post.published_at,
     dateModified: post.updated_at || post.published_at,
-    author: post.authors?.map((author) => ({
-      "@type": "Person",
-      name: author.name,
-    })),
-    publisher: {
-      "@type": "Organization",
-      name: "DeepLearnHQ",
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": postUrl,
-    },
+    author: post.authors?.map((author) => ({ "@type": "Person", name: author.name })),
+    publisher: { "@type": "Organization", name: "DeepLearnHQ" },
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
   };
 
-  // Get category tags
-  const categoryTags =
-    post.tags?.filter(
-      (tag) =>
-        tag.slug.startsWith("category:") || tag.name?.startsWith("category:")
-    ) || [];
-
   return (
-    <div className="bg-surface-0">
+    <DocsLayout showLeftSidebar={true} showRightTOC={true}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Article Header */}
-      <header className="classic-padding py-8 md:py-12 bg-surface-100 border-b border-neutral-border">
-        <div className="max-w-3xl mx-auto">
-          <Breadcrumbs
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Blog", href: "/blog" },
-              { label: post.title || "" },
-            ]}
-          />
+      {/* Breadcrumbs */}
+      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <Link href="/" className="hover:text-[#0D9373]">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </Link>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+        <Link href="/blog" className="hover:text-[#0D9373]">Blog</Link>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+        <span className="text-gray-900 font-medium truncate max-w-[200px]">{post.title}</span>
+      </nav>
 
-          {/* Category Tags */}
-          {categoryTags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-6 mb-4">
-              {categoryTags.map((tag) => (
-                <Link
-                  key={tag.slug}
-                  href={`/category/${tag.slug.replace("category:", "")}`}
-                  className="px-3 py-1 text-xs font-medium text-primary-700 bg-primary-100 rounded-full hover:bg-primary-200 transition-colors"
-                >
-                  {(tag.name || tag.slug).replace("category:", "")}
-                </Link>
-              ))}
-            </div>
-          )}
+      <article>
+        {/* Title */}
+        <h1 id="title" className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          {post.title}
+        </h1>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-900 tracking-tight mb-4">
-            {post.title}
-          </h1>
-
-          {post.excerpt && (
-            <p className="text-lg text-neutral-text-secondary mb-6">
-              {post.excerpt}
-            </p>
-          )}
-
-          <div className="flex items-center gap-4 text-sm text-neutral-text-tertiary">
-            {post.published_at && (
-              <time>
-                {new Date(post.published_at).toLocaleDateString("en-US", {
-                  year: "numeric",
+        {/* Metadata row */}
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+          <div className="flex items-center gap-1.5">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Reading Time: {(post as any).reading_time || 5} minutes</span>
+          </div>
+          {post.published_at && (
+            <div className="flex items-center gap-1.5">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>
+                Last updated on{" "}
+                {new Date(post.updated_at || post.published_at).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
+                  year: "numeric",
                 })}
-              </time>
-            )}
-            {post.reading_time && (
-              <>
-                <span className="w-1 h-1 rounded-full bg-neutral-border" />
-                <span>{post.reading_time} min read</span>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* Feature Image */}
-      {post.feature_image && (
-        <div className="classic-padding py-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="relative aspect-video rounded-xl overflow-hidden shadow-card">
-              <Image
-                src={post.feature_image}
-                alt={post.title || ""}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Article Content */}
-      <article className="classic-padding py-8 md:py-12">
-        <div className="max-w-3xl mx-auto">
-          {contentBlocks.length > 0 ? (
-            <div className="prose prose-lg max-w-none">
-              <BlockRenderer blocks={contentBlocks} />
-            </div>
-          ) : (
-            <div className="prose prose-lg max-w-none">
-              {post.html ? (
-                <div dangerouslySetInnerHTML={{ __html: post.html }} />
-              ) : (
-                <p className="text-neutral-text-secondary">
-                  Content is being loaded...
-                </p>
-              )}
+              </span>
             </div>
           )}
-
-          {/* Tags */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-neutral-border">
-              <h3 className="text-sm font-semibold text-neutral-text-tertiary uppercase tracking-wide mb-4">
-                Tags
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag.slug}
-                    className="px-3 py-1.5 text-sm text-neutral-text-secondary bg-surface-200 rounded-lg"
-                  >
-                    {(tag.name || tag.slug).replace("category:", "").replace("course:", "")}
-                  </span>
-                ))}
-              </div>
+          {post.authors && post.authors[0] && (
+            <div className="flex items-center gap-1.5 ml-auto">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span>{post.authors[0].name}</span>
             </div>
           )}
+        </div>
 
-          {/* Social Sharing */}
-          <div className="mt-8 pt-8 border-t border-neutral-border">
-            <SocialShare
-              url={postUrl}
-              title={post.title || ""}
-              description={post.excerpt || post.meta_description}
+        {/* Feature Image */}
+        {post.feature_image && (
+          <div className="relative aspect-video rounded-lg overflow-hidden mb-8">
+            <Image
+              src={post.feature_image}
+              alt={post.title || ""}
+              fill
+              className="object-cover"
+              priority
             />
           </div>
+        )}
+
+        {/* Content */}
+        <div className="prose prose-lg max-w-none prose-headings:scroll-mt-24 prose-a:text-[#0D9373] prose-a:no-underline hover:prose-a:underline">
+          {contentBlocks.length > 0 ? (
+            <BlockRenderer blocks={contentBlocks} />
+          ) : post.html ? (
+            <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          ) : (
+            <p className="text-gray-600">Content is being loaded...</p>
+          )}
+        </div>
+
+        {/* Social Sharing */}
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <SocialShare url={postUrl} title={post.title || ""} description={post.excerpt || ""} />
         </div>
       </article>
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="classic-padding py-12 md:py-16 bg-surface-100 border-t border-neutral-border">
-          <div className="max-w-content">
-            <RelatedPosts posts={relatedPosts} />
-          </div>
+        <section className="mt-12 pt-8 border-t border-gray-200">
+          <RelatedPosts posts={relatedPosts} />
         </section>
       )}
-    </div>
+    </DocsLayout>
   );
 }

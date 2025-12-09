@@ -58,9 +58,9 @@ export default function PostCard({ post }: PostCardProps) {
                   })
                 : null}
             </time>
-            {post.reading_time && (
+            {(post as any).reading_time && (
               <span className="text-xs text-neutral-text-tertiary">
-                {post.reading_time} min read
+                {(post as any).reading_time} min read
               </span>
             )}
           </div>

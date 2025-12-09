@@ -1,124 +1,121 @@
 import Link from "next/link";
-import { getAllCategories, getPostsByCategorySlug } from "@/lib/ghost";
-import { CategoryCard } from "@/components/ui/Card";
+import { getAllCategories } from "@/lib/ghost";
+import TopBanner from "@/components/TopBanner";
+import NavbarV2 from "@/components/NavbarV2";
+import Footer from "@/components/Footer";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
 export const metadata = {
   title: "Categories - DeepLearnHQ",
-  description: "Browse all categories on DeepLearnHQ - AI, Prompt Engineering, ChatGPT, and more.",
+  description: "Browse all categories and topics on DeepLearnHQ.",
 };
 
-function formatCategoryName(slug: string): string {
-  return slug
-    .replace("category:", "")
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
+// Category icons mapping
+const categoryIcons: Record<string, string> = {
+  basics: "😃",
+  applications: "🤖",
+  intermediate: "🧑‍🎄",
+  advanced: "🎅",
+  reliability: "⚖️",
+  "prompt-hacking": "🔓",
+  "image-prompting": "🖼️",
+  "new-techniques": "🚀",
+  models: "🔧",
+  rag: "📁",
+  agents: "🤖",
+  "prompt-tuning": "👍",
+  "prompt-engineering": "💡",
+  "finance-ai": "💰",
+  default: "📚",
+};
 
 export default async function CategoriesPage() {
-  const categories = await getAllCategories();
-
-  // Get post counts for each category
-  const categoriesWithCounts = await Promise.all(
-    categories.map(async (category) => {
-      const posts = await getPostsByCategorySlug(category.slug);
-      return {
-        ...category,
-        postCount: posts.length,
-      };
-    })
-  );
+  let categories: any[] = [];
+  try {
+    categories = await getAllCategories();
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
 
   return (
-    <div className="classic-padding py-12 md:py-16 bg-surface-0">
-      <div className="max-w-content">
-        {/* Page Header */}
-        <div className="max-w-2xl mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-primary-900 mb-4">
-            Categories
-          </h1>
-          <p className="text-lg text-neutral-text-secondary">
-            Explore our content organized by topic. Find the resources you need
-            to master AI and prompt engineering.
+    <div className="min-h-screen flex flex-col bg-white">
+      <TopBanner
+        text="Compete in HackAPrompt 2.0, the world's largest AI Red-Teaming competition!"
+        ctaText="Check it out"
+        ctaLink="/courses"
+      />
+      <NavbarV2 />
+
+      {/* Hero */}
+      <section className="py-12 px-4 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Categories</h1>
+          <p className="text-gray-600">
+            Browse all topics and categories. Click on a category to see related articles.
           </p>
         </div>
+      </section>
 
-        {/* Categories Grid */}
-        {categoriesWithCounts.length === 0 ? (
-          <div className="text-center py-20 bg-surface-100 rounded-xl">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary-100 flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-primary-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                />
-              </svg>
+      {/* Categories Grid */}
+      <section className="flex-1 py-12 px-4">
+        <div className="max-w-7xl mx-auto">
+          {categories.length === 0 ? (
+            <div className="text-center py-20">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No categories yet</h3>
+              <p className="text-gray-600">Categories will appear here once posts are tagged.</p>
             </div>
-            <h3 className="text-lg font-semibold text-primary-900 mb-2">
-              No categories yet
-            </h3>
-            <p className="text-neutral-text-secondary">
-              Categories will appear here once posts are tagged.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categoriesWithCounts.map((category) => (
-              <CategoryCard
-                key={category.id}
-                name={formatCategoryName(category.slug)}
-                slug={category.slug.replace("category:", "")}
-                postCount={category.postCount}
-              />
-            ))}
-          </div>
-        )}
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {categories.map((category) => {
+                const slug = category.slug.replace("category:", "").replace("category-", "");
+                const icon = categoryIcons[slug] || categoryIcons.default;
 
-        {/* Featured Categories (hardcoded for now) */}
-        <div className="mt-16 pt-12 border-t border-neutral-border">
-          <h2 className="text-2xl font-bold text-primary-900 mb-6">
-            Popular Topics
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { name: "Prompt Engineering", slug: "prompt-engineering", icon: "M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
-              { name: "ChatGPT", slug: "chatgpt", icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" },
-              { name: "AI Tools", slug: "ai-tools", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-              { name: "Deep Learning", slug: "deep-learning", icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" },
-            ].map((topic) => (
-              <Link
-                key={topic.slug}
-                href={`/category/${topic.slug}`}
-                className="group flex items-center gap-3 p-4 bg-surface-100 rounded-xl hover:bg-primary-100 transition-colors"
-              >
-                <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center group-hover:bg-primary-500 transition-colors">
-                  <svg
-                    className="w-5 h-5 text-primary-500 group-hover:text-white transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/category/${category.slug}`}
+                    className="group flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-[#0D9373] hover:shadow-md transition-all"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={topic.icon} />
-                  </svg>
-                </div>
-                <span className="font-medium text-primary-900 group-hover:text-primary-700 transition-colors">
-                  {topic.name}
-                </span>
-              </Link>
-            ))}
-          </div>
+                    <div className="w-12 h-12 flex items-center justify-center bg-gray-100 group-hover:bg-[#0D9373]/10 rounded-lg text-2xl transition-colors">
+                      {icon}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 group-hover:text-[#0D9373] transition-colors">
+                        {category.name?.replace("category:", "").replace("category-", "")}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {category.count?.posts || 0} articles
+                      </p>
+                    </div>
+                    <svg
+                      className="w-5 h-5 text-gray-400 ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
-      </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }
