@@ -1,4 +1,3 @@
-// components/blocks/SpacerBlock.tsx
 import type { SpacerBlock as SpacerBlockType } from "@/types/content-blocks";
 
 interface Props {
@@ -10,15 +9,21 @@ export default function SpacerBlock({ block }: Props) {
   const spacing = block.formatting?.spacing || "medium";
 
   const spacingHeights = {
-    small: 20,
-    medium: 40,
-    large: 60,
+    small: 24,
+    medium: 48,
+    large: 72,
   };
 
-  const finalHeight = spacing === "small" || spacing === "medium" || spacing === "large"
-    ? spacingHeights[spacing]
-    : height;
+  const finalHeight =
+    spacing === "small" || spacing === "medium" || spacing === "large"
+      ? spacingHeights[spacing]
+      : height;
 
-  return <div style={{ height: `${finalHeight}px` }} />;
+  return (
+    <div
+      className="w-full"
+      style={{ height: `${finalHeight}px` }}
+      aria-hidden="true"
+    />
+  );
 }
-

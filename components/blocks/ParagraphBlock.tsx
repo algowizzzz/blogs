@@ -1,4 +1,3 @@
-// components/blocks/ParagraphBlock.tsx
 import type { ParagraphBlock as ParagraphBlockType } from "@/types/content-blocks";
 
 interface Props {
@@ -16,16 +15,18 @@ export default function ParagraphBlock({ block }: Props) {
   };
 
   const spacingClasses = {
-    small: "mb-2",
-    medium: "mb-4",
-    large: "mb-6",
+    small: "mb-3",
+    medium: "mb-5",
+    large: "mb-8",
   };
 
   return (
-    <p className={`${alignmentClasses[alignment]} ${spacingClasses[spacing]}`}>
+    <p
+      className={`text-neutral-text leading-relaxed ${alignmentClasses[alignment]} ${spacingClasses[spacing]}`}
+    >
       {block.content.map((segment, index) => {
         let className = "";
-        if (segment.bold) className += "font-bold ";
+        if (segment.bold) className += "font-semibold text-primary-900 ";
         if (segment.italic) className += "italic ";
 
         if (segment.link) {
@@ -35,7 +36,7 @@ export default function ParagraphBlock({ block }: Props) {
               href={segment.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${className}text-blue-600 hover:underline`}
+              className={`${className}text-primary-500 hover:text-primary-700 underline underline-offset-2 transition-colors`}
             >
               {segment.text}
             </a>
@@ -51,4 +52,3 @@ export default function ParagraphBlock({ block }: Props) {
     </p>
   );
 }
-

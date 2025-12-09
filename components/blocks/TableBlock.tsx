@@ -1,4 +1,3 @@
-// components/blocks/TableBlock.tsx
 import type { TableBlock as TableBlockType } from "@/types/content-blocks";
 
 interface Props {
@@ -16,9 +15,9 @@ export default function TableBlock({ block }: Props) {
   };
 
   const spacingClasses = {
-    small: "my-4",
-    medium: "my-6",
-    large: "my-8",
+    small: "my-6",
+    medium: "my-8",
+    large: "my-12",
   };
 
   const getCellAlignment = (index: number) => {
@@ -32,14 +31,14 @@ export default function TableBlock({ block }: Props) {
 
   return (
     <div className={`${spacingClasses[spacing]} ${alignmentClasses[alignment]} overflow-x-auto`}>
-      <table className="min-w-full border-collapse border border-gray-300">
+      <table className="min-w-full border border-neutral-border rounded-lg overflow-hidden">
         {block.has_header && (
           <thead>
-            <tr className="bg-gray-100 dark:bg-gray-800">
+            <tr className="bg-surface-200">
               {block.columns.map((column, index) => (
                 <th
                   key={index}
-                  className={`border border-gray-300 px-4 py-2 font-semibold ${getCellAlignment(index)}`}
+                  className={`border-b border-neutral-border px-4 py-3 font-semibold text-sm text-primary-900 ${getCellAlignment(index)}`}
                 >
                   {column}
                 </th>
@@ -51,12 +50,14 @@ export default function TableBlock({ block }: Props) {
           {block.rows.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className={rowIndex % 2 === 0 ? "bg-white dark:bg-gray-900" : "bg-gray-50 dark:bg-gray-800"}
+              className={`${
+                rowIndex % 2 === 0 ? "bg-surface-0" : "bg-surface-100"
+              } hover:bg-primary-100/30 transition-colors`}
             >
               {row.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className={`border border-gray-300 px-4 py-2 ${getCellAlignment(cellIndex)}`}
+                  className={`border-b border-neutral-border px-4 py-3 text-sm text-neutral-text ${getCellAlignment(cellIndex)}`}
                 >
                   {cell}
                 </td>
@@ -68,4 +69,3 @@ export default function TableBlock({ block }: Props) {
     </div>
   );
 }
-

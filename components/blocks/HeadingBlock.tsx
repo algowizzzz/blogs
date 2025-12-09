@@ -1,4 +1,3 @@
-// components/blocks/HeadingBlock.tsx
 import type { HeadingBlock as HeadingBlockType } from "@/types/content-blocks";
 
 interface Props {
@@ -8,20 +7,20 @@ interface Props {
 export default function HeadingBlock({ block }: Props) {
   const alignment = block.formatting?.alignment || "left";
   const spacing = block.formatting?.spacing || "medium";
-  
+
   const spacingClasses = {
-    small: "mb-2",
-    medium: "mb-4",
-    large: "mb-6",
+    small: "mb-3 mt-6",
+    medium: "mb-4 mt-8",
+    large: "mb-6 mt-10",
   };
 
   const sizeClasses = {
-    1: "text-4xl font-bold",
-    2: "text-3xl font-bold",
-    3: "text-2xl font-semibold",
-    4: "text-xl font-semibold",
-    5: "text-lg font-semibold",
-    6: "text-base font-semibold",
+    1: "text-3xl md:text-4xl font-bold tracking-tight text-primary-900",
+    2: "text-2xl md:text-3xl font-bold tracking-tight text-primary-900",
+    3: "text-xl md:text-2xl font-semibold text-primary-900",
+    4: "text-lg md:text-xl font-semibold text-primary-900",
+    5: "text-base md:text-lg font-semibold text-primary-900",
+    6: "text-sm md:text-base font-semibold text-neutral-text-secondary uppercase tracking-wide",
   };
 
   const alignmentClasses = {
@@ -49,4 +48,3 @@ export default function HeadingBlock({ block }: Props) {
     </Component>
   );
 }
-

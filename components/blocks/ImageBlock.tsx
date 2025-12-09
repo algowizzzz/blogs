@@ -1,4 +1,3 @@
-// components/blocks/ImageBlock.tsx
 import Image from "next/image";
 import type { ImageBlock as ImageBlockType } from "@/types/content-blocks";
 
@@ -17,9 +16,9 @@ export default function ImageBlock({ block }: Props) {
   };
 
   const spacingClasses = {
-    small: "my-4",
-    medium: "my-6",
-    large: "my-8",
+    small: "my-6",
+    medium: "my-8",
+    large: "my-12",
   };
 
   // Default dimensions if not provided
@@ -28,13 +27,16 @@ export default function ImageBlock({ block }: Props) {
 
   return (
     <figure className={`${spacingClasses[spacing]} ${alignmentClasses[alignment]}`}>
-      <div className="relative w-full" style={{ maxWidth: block.width ? `${block.width}px` : undefined }}>
+      <div
+        className="relative w-full overflow-hidden rounded-xl shadow-card"
+        style={{ maxWidth: block.width ? `${block.width}px` : undefined }}
+      >
         <Image
           src={block.url}
           alt={block.alt}
           width={width}
           height={height}
-          className="w-full rounded-lg"
+          className="w-full transition-transform duration-300 hover:scale-[1.02]"
           style={{
             height: block.height ? `${block.height}px` : "auto",
             objectFit: block.height ? "cover" : "contain",
@@ -43,11 +45,10 @@ export default function ImageBlock({ block }: Props) {
         />
       </div>
       {block.caption && (
-        <figcaption className="mt-2 text-sm text-gray-600 text-center italic">
+        <figcaption className="mt-3 text-sm text-neutral-text-tertiary text-center">
           {block.caption}
         </figcaption>
       )}
     </figure>
   );
 }
-

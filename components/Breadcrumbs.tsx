@@ -1,4 +1,3 @@
-// components/Breadcrumbs.tsx
 import Link from "next/link";
 
 interface BreadcrumbItem {
@@ -11,7 +10,8 @@ interface Props {
 }
 
 export default function Breadcrumbs({ items }: Props) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://blogs-puce-nine.vercel.app";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://blogs-puce-nine.vercel.app";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -30,17 +30,36 @@ export default function Breadcrumbs({ items }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex items-center space-x-2 text-sm text-gray-600">
+      <nav aria-label="Breadcrumb">
+        <ol className="flex items-center flex-wrap gap-1 text-sm">
           {items.map((item, index) => (
             <li key={index} className="flex items-center">
-              {index > 0 && <span className="mx-2 text-gray-400">/</span>}
+              {index > 0 && (
+                <svg
+                  className="w-4 h-4 mx-2 text-neutral-text-tertiary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              )}
               {item.href ? (
-                <Link href={item.href} className="hover:text-gray-900 transition-colors">
+                <Link
+                  href={item.href}
+                  className="text-neutral-text-secondary hover:text-primary-500 transition-colors"
+                >
                   {item.label}
                 </Link>
               ) : (
-                <span className="text-gray-900 font-medium">{item.label}</span>
+                <span className="text-neutral-text-tertiary font-medium truncate max-w-[200px] md:max-w-none">
+                  {item.label}
+                </span>
               )}
             </li>
           ))}
@@ -49,4 +68,3 @@ export default function Breadcrumbs({ items }: Props) {
     </>
   );
 }
-
